@@ -51,7 +51,15 @@ app.set("io", io);
 app.use(express.json());
 app.use(cookieParser());
 // app.use(cors(corsOptions));
-app.options('*', cors());
+
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*'); // Adjust domain
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  next();
+});
+
 
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/chat", chatRoute);
